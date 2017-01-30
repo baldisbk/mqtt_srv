@@ -32,15 +32,17 @@ func main() {
 	}
 	output := strings.Join(os.Args[1:], " ")
 	expect := 1
-	lastCheck := time.Now()
+	firstCheck := time.Now()
+	var numOfCompletes int64 = 0
 	for str := range ch {
 		num := m[str]
 		if num == expect {
 			expect = expect+1
 			if (expect == noOfWords) {
-				fmt.Println(output, time.Now().Sub(lastCheck))
+				numOfCompletes = numOfCompletes + 1
+				avgDelay := int64(time.Now().Sub(firstCheck)) / numOfCompletes
+				fmt.Println(output, time.Duration(avgDelay))
 				expect = 1
-				lastCheck = time.Now()
 			}
 		} else if num != 0 {
 			expect = 1
