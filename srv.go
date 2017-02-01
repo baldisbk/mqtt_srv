@@ -51,7 +51,13 @@ func main() {
 				fmt.Println(output, time.Duration(avgDelay))
 				expect = 1
 			}
+		} else if num == 1 {
+			// we have not received what we expected, so drop counter to beginning
+			// but we just received word 1, so next should be 2
+			// (if we have just 1 word, we never get in this branch)
+			expect = 2
 		} else if num != 0 {
+			// we have not received what we expected, but ignore words not from list
 			expect = 1
 		}
 	}
