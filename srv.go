@@ -18,6 +18,14 @@ var receiveCallback MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Mess
 func main() {
 	m := make(map[string]int)
 	for n,str := range os.Args[1:] {
+		if m[str] == 0 {
+			m[str] = n+1
+		} else {
+			fmt.Println("Duplicate word:", str);
+			os.Exit(1)
+		}
+	}
+	for str := range m {
 		topic := fmt.Sprintf("topic_%s", str)
 		opts := MQTT.NewClientOptions().AddBroker("tcp://localhost:1883")
 		c := MQTT.NewClient(opts)
@@ -28,7 +36,6 @@ func main() {
 			panic(token.Error())
 		}
 		fmt.Println("Listening for", topic)
-		m[str] = n+1
 	}
 	output := strings.Join(os.Args[1:], " ")
 	expect := 1
