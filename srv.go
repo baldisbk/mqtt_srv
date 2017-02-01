@@ -38,7 +38,7 @@ func main() {
 		num := m[str]
 		if num == expect {
 			expect = expect+1
-			if (expect == noOfWords) {
+			if (expect == noOfWords+1) {
 				numOfCompletes = numOfCompletes + 1
 				avgDelay := int64(time.Now().Sub(firstCheck)) / numOfCompletes
 				fmt.Println(output, time.Duration(avgDelay))
